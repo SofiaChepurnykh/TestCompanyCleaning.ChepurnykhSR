@@ -4,4 +4,72 @@
 
 <h1>Создание заявки на клининг</h1>
 
-Здесь будет форма заявки на клининг
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>ФИО</th>
+            <th>Телефон</th>
+            <th>Офис</th>
+            <th>Кабинет</th>
+            <th>Услуги</th>
+            <th>Дата и время</th>
+            <th>Комментарий</th>
+            <th>Создано</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var request in requests)
+        {
+            <tr>
+                <td>@request.Id</td>
+                <td>@request.FullName</td>
+                <td>@request.PhoneNumber</td>
+                <td>@request.OfficeAddress</td>
+                <td>@request.Room</td>
+                <td>@string.Join(", ", request.Services)</td>
+                <td>@request.RequestedDateTime?.ToString("g")</td>
+                <td>@request.Comment</td>
+                <td>@request.CreatedDate.ToString("g")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+@foreach (var request in requests)
+{
+    <div class="p-3 mb-3 border rounded">
+        <p><strong>ФИО:</strong> @request.FullName</p>
+        <p><strong>Телефон:</strong> @request.PhoneNumber</p>
+        <p><strong>Офис:</strong> @request.OfficeAddress</p>
+        <p><strong>Кабинет:</strong> @request.Room</p>
+        <p><strong>Услуги:</strong> @string.Join(", ", request.Services)</p>
+        <p><strong>Дата и время:</strong> @request.RequestedDateTime?.ToString("g")</p>
+        <p><strong>Комментарий:</strong> @request.Comment</p>
+        <p><strong>Создано:</strong> @request.CreatedDate.ToString("g")</p>
+    </div>
+}
+
+@code {
+    IEnumerable<RequestItem> requests = new List<RequestItem>
+    {
+        new RequestItem { Id = 1,
+            FullName = "Иванов Иван Иванович",
+            PhoneNumber = "89111111111",
+            OfficeAddress = "Г. Тестовик, ул. Первая, д. 1",
+            Room = "1",
+            Services = new List<string> { "Влажная уборка", "Вынос мусора" },
+            RequestedDateTime = new DateTime(2025, 7, 3, 14, 0, 0),
+            Comment = "Пожалуйста, уделите внимание углам",
+            CreatedDate = DateTime.Now },
+        new RequestItem { Id = 2,
+            FullName = "Петров Петр Петрович",
+            PhoneNumber = "89222222222",
+            OfficeAddress = "Г. Тестовик, ул. Вторая, д. 2",
+            Room = "2",
+            Services = new List<string> { "Очистка офисной техники" },
+            RequestedDateTime = new DateTime(2025, 7, 4, 15, 0, 0),
+            Comment = "Нет",
+            CreatedDate = DateTime.Now },
+    };
+}
