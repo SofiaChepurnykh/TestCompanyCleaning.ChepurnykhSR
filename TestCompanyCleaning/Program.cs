@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using TestCompanyCleaning.Components;
 using TestCompanyCleaning.Components.Account;
 using TestCompanyCleaning.Data;
+using TestCompanyCleaning.Data.Interfaces;
+using TestCompanyCleaning.Data.Services;
 
 namespace TestCompanyCleaning
 {
@@ -40,6 +42,7 @@ namespace TestCompanyCleaning
                 .AddDefaultTokenProviders();
 
             builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+            builder.Services.AddScoped<IDataService, MemoryDataService>();
 
             var app = builder.Build();
 
