@@ -7,47 +7,37 @@
 
 <h1>Создание заявки на клининг</h1>
 
-
-<table class="table table-bordered">
-    <thead>
+<div class="container">
+    @if (requests == null)
+    {
         <tr>
-            <th>ID</th>
-            <th>ФИО</th>
-            <th>Телефон</th>
-            <th>Офис</th>
-            <th>Кабинет</th>
-            <th>Услуги</th>
-            <th>Дата и время</th>
-            <th>Комментарий</th>
-            <th>Создано</th>
+            <td colspan="5">Loading...</td>
         </tr>
-    </thead>
-    <tbody>
-        @if (requests == null)
-        {
-            <tr>
-                <td colspan="5">Loading...</td>
-            </tr>
-        }
-        else
-        {
+    }
+    else
+    {
+        <div class="card-group">
             @foreach (var request in requests)
             {
-                <tr>
-                    <td>@request.Id</td>
-                    <td>@request.FullName</td>
-                    <td>@request.PhoneNumber</td>
-                    <td>@request.OfficeAddress</td>
-                    <td>@request.Room</td>
-                    <td>@string.Join(", ", request.Services)</td>
-                    <td>@request.RequestedDateTime?.ToString("g")</td>
-                    <td>@request.Comment</td>
-                    <td>@request.CreatedDate.ToString("g")</td>
-                </tr>
+                <div class="card">
+                    <div class="card-header">
+                        @request.FullName
+                    </div>
+                    <div class="card-body">
+                        <p>@request.PhoneNumber</p>
+                        <p>@request.OfficeAddress</p>
+                        <p>@request.Room</p>
+                        <p>@string.Join(", ", request.Services)</p>
+                        <p>@request.RequestedDateTime?.ToString("g")</p>
+                        <p>@request.Comment</p>
+                        <p>@request.CreatedDate.ToString("g")</p>
+                    </div>
+                </div>
             }
-        }
-    </tbody>
-</table>
+        </div>
+    }
+</div>
+
 @if (requests == null)
 {
     <tr>
