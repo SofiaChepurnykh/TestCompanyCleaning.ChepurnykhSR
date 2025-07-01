@@ -1,6 +1,7 @@
 ﻿@page "/"
 @rendermode InteractiveServer 
 @inject IDataService data
+@inject NavigationManager navigate 
 @attribute [Authorize]
 
 <PageTitle>Создание заявки</PageTitle>
@@ -16,6 +17,9 @@
     }
     else
     {
+        <div class="btn-group m-2">
+            <button class="btn btn-primary" @onclick="AddRequest">Новая заявка</button>
+        </div>
         <div class="card-group">
             @foreach (var request in requests)
             {
@@ -27,10 +31,15 @@
                         <p>@request.PhoneNumber</p>
                         <p>@request.OfficeAddress</p>
                         <p>@request.Room</p>
-                        <p>@string.Join(", ", request.Services)</p>
+                        @* <p>@request.Services</p> *@
+                        @* <p>@string.Join(", ", request.Services)</p> *@
                         <p>@request.RequestedDateTime?.ToString("g")</p>
                         <p>@request.Comment</p>
                         <p>@request.CreatedDate.ToString("g")</p>
+                    </div>
+                    <div class="card-footer">
+                        <a class="btn btn-primary" href="employees/@request.Id">Изменить</a>
+                        <button class="btn btn-primary" @onclick="async () => await DeleteRequest(request.Id)">Удалить</button>
                     </div>
                 </div>
             }
@@ -53,7 +62,8 @@ else
             <p><strong>Телефон:</strong> @request.PhoneNumber</p>
             <p><strong>Офис:</strong> @request.OfficeAddress</p>
             <p><strong>Кабинет:</strong> @request.Room</p>
-            <p><strong>Услуги:</strong> @string.Join(", ", request.Services)</p>
+            @* <p><strong>Кабинет:</strong> @request.Services</p> *@
+            @* <p><strong>Услуги:</strong> @string.Join(", ", request.Services)</p> *@
             <p><strong>Дата и время:</strong> @request.RequestedDateTime?.ToString("g")</p>
             <p><strong>Комментарий:</strong> @request.Comment</p>
             <p><strong>Создано:</strong> @request.CreatedDate.ToString("g")</p>
@@ -67,6 +77,17 @@ else
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        requests = await data.GetRequestItemsAsync();
+        requests = await data.GetAllAsync();
+    }
+
+    void AddRequest()
+    {
+        navigate.NavigateTo("requests/add");
+    }
+
+    async Task DeleteRequest(int id)
+    {
+        await data.DeleteAsync(id);
+        requests = await data.GetAllAsync();
     }
 }

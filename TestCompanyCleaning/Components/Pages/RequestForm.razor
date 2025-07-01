@@ -1,0 +1,117 @@
+﻿@page "/requests/add"
+@page "/requests/{Id:int}"
+
+@inject IDataService data
+@inject NavigationManager navigate
+
+@if (RequestItem != null)
+{
+    <EditForm Model="RequestItem" FormName="RequestForm" OnValidSubmit="ValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+    
+        <h2>Заявка на клининг</h2>
+        <InputNumber @bind-Value="RequestItem.Id" hidden />
+
+        <div class="form-group d-flex justify-content-between m-2">
+            <label class="col-form-label col-3">ФИО</label>
+            <InputText @bind-Value="RequestItem.FullName" class="form-control" />
+            <ValidationMessage For="() => RequestItem.FullName" />
+        </div>
+
+        <div class="form-group d-flex justify-content-between m-2">
+            <label class="col-form-label col-3">Телефон</label>
+            <InputText @bind-Value="RequestItem.PhoneNumber" class="form-control" />
+            <ValidationMessage For="() => RequestItem.PhoneNumber" />
+        </div>
+
+        <div class="form-group d-flex justify-content-between m-2">
+            <label class="col-form-label col-3">Офис</label>
+            <InputSelect @bind-Value="RequestItem.OfficeAddress" class="form-control">
+                <option value="">Выберите офис</option>
+                @foreach (var office in RequestItem.AvailableOffices)
+                {
+                    <option value="@office">@office</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="() => RequestItem.OfficeAddress" />
+        </div>
+
+        <div class="form-group d-flex justify-content-between m-2">
+            <label class="col-form-label col-3">Кабинет</label>
+            <InputSelect @bind-Value="RequestItem.Room" class="form-control">
+                <option value="">Выберите кабинет</option>
+                @foreach (var room in RequestItem.AvailableRooms)
+                {
+                    <option value="@room">@room</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="() => RequestItem.Room" />
+        </div>
+
+        @* <div class="form-group d-flex justify-content-between m-2">
+            <label class="col-form-label col-3">Услуга</label>
+            <InputSelect @bind-Value="RequestItem.Services" class="form-control">
+                <option value="">Выберите услугу</option>
+                @foreach (var services in RequestItem.AvailableServices)
+                {
+                    <option value="@services">@services</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="() => RequestItem.Services" />
+        </div> *@
+
+        <div class="form-group d-flex justify-content-between m-2">
+            <label class="col-form-label col-3">Дата и время</label>
+            <InputDate @bind-Value="RequestItem.RequestedDateTime" class="form-control" />
+            <ValidationMessage For="() => RequestItem.RequestedDateTime" />
+        </div>
+
+        <div class="form-group d-flex justify-content-between m-2">
+            <label class="col-form-label col-3">Комментарий</label>
+            <InputTextArea @bind-Value="RequestItem.Comment" class="form-control" />
+            <ValidationMessage For="() => RequestItem.Comment" />
+        </div>
+
+        <div class="btn-group">
+            <button class="btn btn-primary m-2" type="submit">Отправить</button>
+            <a class="btn btn-secondary m-2" href="/">Отмена</a>
+        </div>
+    </EditForm>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    [SupplyParameterFromForm]
+    RequestItem? RequestItem { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        if (RequestItem == null)
+        {
+            RequestItem = new();
+            if (Id != 0)
+            {
+                var src = await data.GetRequestAsync(Id);
+                RequestItem.Id = src.Id;
+                RequestItem.FullName = src.FullName;
+                RequestItem.PhoneNumber = src.PhoneNumber;
+                RequestItem.OfficeAddress = src.OfficeAddress;
+                RequestItem.Room = src.Room;
+                // RequestItem.Services = src.Services;
+                RequestItem.RequestedDateTime = src.RequestedDateTime;
+                RequestItem.Comment = src.Comment;
+                RequestItem.CreatedDate = src.CreatedDate;
+            }
+        }
+    }
+
+    async Task ValidSubmit()
+    {
+        await data.SaveAsync(RequestItem!);
+        navigate.NavigateTo("/");
+    }
+}

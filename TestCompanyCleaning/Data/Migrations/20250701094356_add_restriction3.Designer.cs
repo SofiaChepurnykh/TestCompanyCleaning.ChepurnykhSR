@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TestCompanyCleaning.Data;
 
@@ -11,9 +12,11 @@ using TestCompanyCleaning.Data;
 namespace TestCompanyCleaning.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250701094356_add_restriction3")]
+    partial class add_restriction3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -254,6 +257,10 @@ namespace TestCompanyCleaning.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Services")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("RequestItems");
@@ -263,23 +270,25 @@ namespace TestCompanyCleaning.Migrations
                         {
                             Id = 1,
                             Comment = "Пожалуйста, уделите внимание углам",
-                            CreatedDate = new DateTime(2025, 7, 1, 15, 8, 5, 227, DateTimeKind.Local).AddTicks(6016),
+                            CreatedDate = new DateTime(2025, 7, 1, 14, 43, 56, 227, DateTimeKind.Local).AddTicks(5153),
                             FullName = "Иванов Иван Иванович",
                             OfficeAddress = "Г. Тестовик, ул. Первая, д. 1",
                             PhoneNumber = "89111111111",
                             RequestedDateTime = new DateTime(2025, 7, 3, 14, 0, 0, 0, DateTimeKind.Unspecified),
-                            Room = "1"
+                            Room = "1",
+                            Services = "[\"\\u0412\\u043B\\u0430\\u0436\\u043D\\u0430\\u044F \\u0443\\u0431\\u043E\\u0440\\u043A\\u0430\",\"\\u0412\\u044B\\u043D\\u043E\\u0441 \\u043C\\u0443\\u0441\\u043E\\u0440\\u0430\"]"
                         },
                         new
                         {
                             Id = 2,
                             Comment = "4 компьютера",
-                            CreatedDate = new DateTime(2025, 7, 1, 15, 8, 5, 227, DateTimeKind.Local).AddTicks(6019),
+                            CreatedDate = new DateTime(2025, 7, 1, 14, 43, 56, 227, DateTimeKind.Local).AddTicks(5157),
                             FullName = "Петров Петр Петрович",
                             OfficeAddress = "Г. Тестовик, ул. Вторая, д. 2",
                             PhoneNumber = "89222222222",
                             RequestedDateTime = new DateTime(2025, 7, 4, 15, 0, 0, 0, DateTimeKind.Unspecified),
-                            Room = "2"
+                            Room = "2",
+                            Services = "[\"\\u041E\\u0447\\u0438\\u0441\\u0442\\u043A\\u0430 \\u043E\\u0444\\u0438\\u0441\\u043D\\u043E\\u0439 \\u0442\\u0435\\u0445\\u043D\\u0438\\u043A\\u0438\"]"
                         });
                 });
 
