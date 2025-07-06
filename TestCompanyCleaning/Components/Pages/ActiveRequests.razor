@@ -1,0 +1,54 @@
+﻿@page "/counter"
+@rendermode InteractiveServer
+@inject IDataService data
+@inject NavigationManager navigate
+@attribute [Authorize]
+
+<PageTitle>Активные заявки</PageTitle>
+
+<h1>Активные заявки на клининг</h1>
+
+@if (requests == null)
+{
+    <tr>
+        <td colspan="5">Loading...</td>
+    </tr>
+}
+else
+{
+    @foreach (var request in requests)
+    {
+        <div class="p-3 mb-3 border rounded">
+            <p><strong>ФИО:</strong> @request.FullName</p>
+            <p><strong>Телефон:</strong> @request.PhoneNumber</p>
+            <p><strong>Офис:</strong> @request.OfficeAddress</p>
+            <p><strong>Кабинет:</strong> @request.Room</p>
+            @* <p><strong>Кабинет:</strong> @request.Services</p> *@
+            @* <p><strong>Услуги:</strong> @string.Join(", ", request.Services)</p> *@
+            <p><strong>Дата и время:</strong> @request.RequestedDateTime?.ToString("g")</p>
+            <p><strong>Комментарий:</strong> @request.Comment</p>
+            <p><strong>Создано:</strong> @request.CreatedDate.ToString("g")</p>
+        </div>
+    }
+}
+
+@code {
+    IEnumerable<RequestItem>? requests;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        requests = await data.GetAllAsync();
+    }
+
+    void AddRequest()
+    {
+        navigate.NavigateTo("requests/add");
+    }
+
+    async Task DeleteRequest(int id)
+    {
+        await data.DeleteAsync(id);
+        requests = await data.GetAllAsync();
+    }
+}

@@ -47,7 +47,7 @@
     }
 </div>
 
-@if (requests == null)
+@* @if (requests == null)
 {
     <tr>
         <td colspan="5">Loading...</td>
@@ -61,15 +61,19 @@ else
             <p><strong>ФИО:</strong> @request.FullName</p>
             <p><strong>Телефон:</strong> @request.PhoneNumber</p>
             <p><strong>Офис:</strong> @request.OfficeAddress</p>
-            <p><strong>Кабинет:</strong> @request.Room</p>
+            <p><strong>Кабинет:</strong> @request.Room</p> *@
+
+
             @* <p><strong>Кабинет:</strong> @request.Services</p> *@
             @* <p><strong>Услуги:</strong> @string.Join(", ", request.Services)</p> *@
-            <p><strong>Дата и время:</strong> @request.RequestedDateTime?.ToString("g")</p>
+
+
+@*             <p><strong>Дата и время:</strong> @request.RequestedDateTime?.ToString("g")</p>
             <p><strong>Комментарий:</strong> @request.Comment</p>
             <p><strong>Создано:</strong> @request.CreatedDate.ToString("g")</p>
         </div>
     }
-}
+} *@
 
 @code {
     IEnumerable<RequestItem>? requests;
