@@ -67,7 +67,7 @@
 
     private string? ProviderDisplayName => externalLoginInfo.ProviderDisplayName;
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
         if (RemoteError is not null)
         {

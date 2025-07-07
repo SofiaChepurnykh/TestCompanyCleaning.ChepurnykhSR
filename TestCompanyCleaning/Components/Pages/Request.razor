@@ -1,7 +1,8 @@
 ﻿@page "/"
-@rendermode InteractiveServer 
+@rendermode InteractiveServer
 @inject IDataService data
-@inject NavigationManager navigate 
+@inject NavigationManager navigate
+@inject IJSRuntime JSRuntime
 @attribute [Authorize]
 
 <PageTitle>Создание заявки</PageTitle>
@@ -12,7 +13,7 @@
     @if (requests == null)
     {
         <tr>
-            <td colspan="5">Loading...</td>
+            <td colspan="5">Loading ...</td>
         </tr>
     }
     else
@@ -31,49 +32,19 @@
                         <p>@request.PhoneNumber</p>
                         <p>@request.OfficeAddress</p>
                         <p>@request.Room</p>
-                        @* <p>@request.Services</p> *@
-                        @* <p>@string.Join(", ", request.Services)</p> *@
                         <p>@request.RequestedDateTime?.ToString("g")</p>
                         <p>@request.Comment</p>
                         <p>@request.CreatedDate.ToString("g")</p>
                     </div>
                     <div class="card-footer">
-                        <a class="btn btn-primary" href="employees/@request.Id">Изменить</a>
-                        <button class="btn btn-primary" @onclick="async () => await DeleteRequest(request.Id)">Удалить</button>
+                        <a class="btn btn-primary" href="request/@request.Id">Изменить</a>
+                        <button class="btn btn-primary" @onclick="async () => await ConfirmDelete(request.Id)">Удалить</button>
                     </div>
                 </div>
             }
         </div>
     }
 </div>
-
-@* @if (requests == null)
-{
-    <tr>
-        <td colspan="5">Loading...</td>
-    </tr>
-}
-else
-{
-    @foreach (var request in requests)
-    {
-        <div class="p-3 mb-3 border rounded">
-            <p><strong>ФИО:</strong> @request.FullName</p>
-            <p><strong>Телефон:</strong> @request.PhoneNumber</p>
-            <p><strong>Офис:</strong> @request.OfficeAddress</p>
-            <p><strong>Кабинет:</strong> @request.Room</p> *@
-
-
-            @* <p><strong>Кабинет:</strong> @request.Services</p> *@
-            @* <p><strong>Услуги:</strong> @string.Join(", ", request.Services)</p> *@
-
-
-@*             <p><strong>Дата и время:</strong> @request.RequestedDateTime?.ToString("g")</p>
-            <p><strong>Комментарий:</strong> @request.Comment</p>
-            <p><strong>Создано:</strong> @request.CreatedDate.ToString("g")</p>
-        </div>
-    }
-} *@
 
 @code {
     IEnumerable<RequestItem>? requests;
@@ -86,10 +57,18 @@ else
 
     void AddRequest()
     {
-        navigate.NavigateTo("requests/add");
+        navigate.NavigateTo("request/add");
     }
 
-    async Task DeleteRequest(int id)
+    async Task ConfirmDelete(int id)
+    {
+        if (await JSRuntime.InvokeAsync<bool>("confirm", $"Вы действительно хотите удалить заявку?"))
+        {
+            await ExecuteDelete(id);
+        }
+    }
+
+    private async Task ExecuteDelete(int id)
     {
         await data.DeleteAsync(id);
         requests = await data.GetAllAsync();

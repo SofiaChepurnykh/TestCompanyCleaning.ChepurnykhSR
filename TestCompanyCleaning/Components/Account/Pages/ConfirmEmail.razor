@@ -25,7 +25,7 @@
     [SupplyParameterFromQuery]
     private string? Code { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
         if (UserId is null || Code is null)
         {

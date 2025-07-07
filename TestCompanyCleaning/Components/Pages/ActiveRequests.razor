@@ -35,7 +35,7 @@ else
 @code {
     IEnumerable<RequestItem>? requests;
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
         await base.OnInitializedAsync();
         requests = await data.GetAllAsync();

@@ -1,5 +1,5 @@
-﻿@page "/requests/add"
-@page "/requests/{Id:int}"
+﻿@page "/request/add"
+@page "/request/{Id:int}"
 
 @inject IDataService data
 @inject NavigationManager navigate
@@ -85,9 +85,9 @@
     public int Id { get; set; }
 
     [SupplyParameterFromForm]
-    RequestItem? RequestItem { get; set; } = new();
+    RequestItem? RequestItem { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
         await base.OnInitializedAsync();
         if (RequestItem == null)
