@@ -4,7 +4,15 @@
 @inject IDataService data
 @inject NavigationManager navigate
 
-@if (RequestItem != null)
+@if (NotFound)
+{
+    <div class="alert alert-danger m-3">
+        Заявка с ID @Id не найдена
+    </div>
+    <a class="btn btn-secondary m-3" href="/">Вернуться на главную</a>
+}
+
+else if (RequestItem != null)
 {
     <EditForm Model="RequestItem" FormName="RequestForm" OnValidSubmit="ValidSubmit">
         <DataAnnotationsValidator />
@@ -87,6 +95,8 @@
     [SupplyParameterFromForm]
     RequestItem? RequestItem { get; set; }
 
+    bool NotFound = false;
+
     protected override async Task OnParametersSetAsync()
     {
         await base.OnInitializedAsync();
@@ -96,6 +106,13 @@
             if (Id != 0)
             {
                 var src = await data.GetRequestAsync(Id);
+
+                if (src == null)
+                {
+                    NotFound = true; 
+                    return;
+                }
+
                 RequestItem.Id = src.Id;
                 RequestItem.FullName = src.FullName;
                 RequestItem.PhoneNumber = src.PhoneNumber;

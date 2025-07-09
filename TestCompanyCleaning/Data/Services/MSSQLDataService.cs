@@ -22,9 +22,9 @@ namespace TestCompanyCleaning.Data.Services
             }
             await context.SaveChangesAsync();
         }
-        public async Task<RequestItem> GetRequestAsync(int id)
+        public async Task<RequestItem?> GetRequestAsync(int id) 
         {
-            return await context.RequestItems.FirstAsync(x => x.Id == id);
+            return await context.RequestItems.FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task DeleteAsync(int id)
