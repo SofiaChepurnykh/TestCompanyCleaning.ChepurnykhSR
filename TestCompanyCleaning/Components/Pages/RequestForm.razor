@@ -29,7 +29,8 @@ else if (RequestItem != null)
 
         <div class="form-group d-flex justify-content-between m-2">
             <label class="col-form-label col-3">Телефон</label>
-            <InputText @bind-Value="RequestItem.PhoneNumber" class="form-control" />
+            <InputText @bind-Value="RequestItem.PhoneNumber" class="form-control"
+                       maxlength="11" inputmode="numeric" pattern="[0-9]*" />
             <ValidationMessage For="() => RequestItem.PhoneNumber" />
         </div>
 
@@ -77,7 +78,7 @@ else if (RequestItem != null)
 
         <div class="form-group d-flex justify-content-between m-2">
             <label class="col-form-label col-3">Комментарий</label>
-            <InputTextArea @bind-Value="RequestItem.Comment" class="form-control" />
+            <InputTextArea @bind-Value="RequestItem.Comment" class="form-control" maxlength="200" />
             <ValidationMessage For="() => RequestItem.Comment" />
         </div>
 

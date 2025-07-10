@@ -5,16 +5,17 @@ namespace TestCompanyCleaning.Data
     public class RequestItem
     {
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Поле 'ФИО' обязательно")]
         public string? FullName { get; set; } // ФИО сотрудника
-        [Required]
+        [Required(ErrorMessage = "Поле 'Телефон' обязательно")]
+        [RegularExpression(@"^\d{11}$", ErrorMessage = "Номер телефона должен содержать ровно 11 цифр")]
         public string? PhoneNumber { get; set; } // Контактный номер
-        [Required]
+        [Required(ErrorMessage = "Поле 'Офис' обязательно")]
         public string? OfficeAddress { get; set; } // Адрес офиса (1 из 2)
-        [Required]
+        [Required(ErrorMessage = "Поле 'Кабинет' обязательно")]
         public string? Room { get; set; } // Кабинет (1 из 10)
         //public string? Services { get; set; } // Выбранные услуги (можно выбрать несколько)
-        [Required]
+        [Required(ErrorMessage = "Поле 'Дата и время' обязательно")]
         public DateTime? RequestedDateTime { get; set; } // Назначенная дата и время
         public string? Comment { get; set; } // Комментарий
         public DateTime CreatedDate { get; set; } = DateTime.Now; // Дата создания
