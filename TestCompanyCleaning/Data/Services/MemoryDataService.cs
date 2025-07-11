@@ -31,7 +31,7 @@ namespace TestCompanyCleaning.Data.Services
             throw new NotImplementedException();
         }
 
-        public Task<RequestItem> GetRequestAsync(int id)
+        public Task<RequestItem?> GetRequestAsync(int id)
         {
             throw new NotImplementedException();
         }

@@ -72,7 +72,7 @@ else if (RequestItem != null)
 
         <div class="form-group d-flex justify-content-between m-2">
             <label class="col-form-label col-3">Дата и время</label>
-            <InputDate @bind-Value="RequestItem.RequestedDateTime" class="form-control" />
+            <InputDate @bind-Value="RequestItem.RequestedDateTime" class="form-control" min="@MinDateString" />
             <ValidationMessage For="() => RequestItem.RequestedDateTime" />
         </div>
 
@@ -132,4 +132,6 @@ else if (RequestItem != null)
         await data.SaveAsync(RequestItem!);
         navigate.NavigateTo("/");
     }
+
+    string MinDateString => DateTime.Now.ToString("yyyy-MM-dd");
 }

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using TestCompanyCleaning.Data;
 
 namespace TestCompanyCleaning.Data
 {
@@ -16,6 +17,7 @@ namespace TestCompanyCleaning.Data
         public string? Room { get; set; } // Кабинет (1 из 10)
         //public string? Services { get; set; } // Выбранные услуги (можно выбрать несколько)
         [Required(ErrorMessage = "Поле 'Дата и время' обязательно")]
+        [FutureDate(ErrorMessage = "Дата должна быть не раньше текущей")]
         public DateTime? RequestedDateTime { get; set; } // Назначенная дата и время
         public string? Comment { get; set; } // Комментарий
         public DateTime CreatedDate { get; set; } = DateTime.Now; // Дата создания
