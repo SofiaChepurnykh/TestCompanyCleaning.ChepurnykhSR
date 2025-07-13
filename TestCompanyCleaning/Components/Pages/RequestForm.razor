@@ -16,7 +16,7 @@ else if (RequestItem != null)
 {
     <EditForm Model="RequestItem" FormName="RequestForm" OnValidSubmit="ValidSubmit">
         <DataAnnotationsValidator />
-        <ValidationSummary />
+        @* <ValidationSummary /> *@
 
         <h2>Заявка на клининг</h2>
         <InputNumber @bind-Value="RequestItem.Id" hidden />

@@ -7,12 +7,16 @@ using TestCompanyCleaning.Data;
 using TestCompanyCleaning.Data.Interfaces;
 using TestCompanyCleaning.Data.Services;
 
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
+
 namespace TestCompanyCleaning
 {
     public class Program
     {
         public static void Main(string[] args)
         {
+            
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
@@ -68,6 +72,15 @@ namespace TestCompanyCleaning
 
             // Add additional endpoints required by the Identity /Account Razor components.
             app.MapAdditionalIdentityEndpoints();
+
+            var supportedCultures = new[] { new CultureInfo("ru-RU") };
+
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("ru-RU"),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            });
 
             app.Run();
         }

@@ -26,7 +26,7 @@
             <DataAnnotationsValidator />
             <h2>Создать новый аккаунт</h2>
             <hr />
-            <ValidationSummary class="text-danger" role="alert" />
+            @* <ValidationSummary class="text-danger" role="alert" /> *@
             <div class="form-floating mb-3">
                 <InputText @bind-Value="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="example@mail.ru" />
                 <label for="email">Email</label>
