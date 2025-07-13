@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TestCompanyCleaning.Data;
 
@@ -11,9 +12,11 @@ using TestCompanyCleaning.Data;
 namespace TestCompanyCleaning.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250713063738_add_requestitem11")]
+    partial class add_requestitem11
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -228,31 +231,19 @@ namespace TestCompanyCleaning.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("CarpetСleaning")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("Disinfection")
-                        .HasColumnType("bit");
-
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("GarbageRemoval")
-                        .HasColumnType("bit");
-
                     b.Property<string>("OfficeAddress")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("OfficeEquipmentCleaning")
-                        .HasColumnType("bit");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
@@ -266,12 +257,6 @@ namespace TestCompanyCleaning.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("WetСleaning")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("WindowWashing")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
 
                     b.ToTable("RequestItems");
@@ -280,36 +265,24 @@ namespace TestCompanyCleaning.Migrations
                         new
                         {
                             Id = 1,
-                            CarpetСleaning = false,
                             Comment = "Пожалуйста, уделите внимание углам",
-                            CreatedDate = new DateTime(2025, 7, 13, 15, 27, 3, 535, DateTimeKind.Local).AddTicks(8033),
-                            Disinfection = false,
+                            CreatedDate = new DateTime(2025, 7, 13, 11, 37, 38, 53, DateTimeKind.Local).AddTicks(3681),
                             FullName = "Иванов Иван Иванович",
-                            GarbageRemoval = false,
                             OfficeAddress = "Г. Тестовик, ул. Первая, д. 1",
-                            OfficeEquipmentCleaning = false,
                             PhoneNumber = "89111111111",
                             RequestedDateTime = new DateTime(2025, 7, 3, 14, 0, 0, 0, DateTimeKind.Unspecified),
-                            Room = "1",
-                            WetСleaning = false,
-                            WindowWashing = true
+                            Room = "1"
                         },
                         new
                         {
                             Id = 2,
-                            CarpetСleaning = false,
                             Comment = "4 компьютера",
-                            CreatedDate = new DateTime(2025, 7, 13, 15, 27, 3, 535, DateTimeKind.Local).AddTicks(8035),
-                            Disinfection = false,
+                            CreatedDate = new DateTime(2025, 7, 13, 11, 37, 38, 53, DateTimeKind.Local).AddTicks(3683),
                             FullName = "Петров Петр Петрович",
-                            GarbageRemoval = false,
                             OfficeAddress = "Г. Тестовик, ул. Вторая, д. 2",
-                            OfficeEquipmentCleaning = false,
                             PhoneNumber = "89222222222",
                             RequestedDateTime = new DateTime(2025, 7, 4, 15, 0, 0, 0, DateTimeKind.Unspecified),
-                            Room = "2",
-                            WetСleaning = false,
-                            WindowWashing = false
+                            Room = "2"
                         });
                 });
 

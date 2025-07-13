@@ -12,17 +12,17 @@ namespace TestCompanyCleaning.Data.Services
 
         public async Task SaveAsync(RequestItem requestItem)
         {
-            if (requestItem.Id == 0) 
+            if (requestItem.Id == 0)
             {
-                await context.RequestItems.AddAsync(requestItem); 
+                await context.RequestItems.AddAsync(requestItem);
             }
             else
             {
-                context.RequestItems.Update(requestItem); 
+                context.RequestItems.Update(requestItem);
             }
             await context.SaveChangesAsync();
         }
-        public async Task<RequestItem?> GetRequestAsync(int id) 
+        public async Task<RequestItem?> GetRequestAsync(int id)
         {
             return await context.RequestItems.FirstOrDefaultAsync(x => x.Id == id);
         }
@@ -30,8 +30,8 @@ namespace TestCompanyCleaning.Data.Services
         public async Task DeleteAsync(int id)
         {
             var requestItem = await context.RequestItems.FirstAsync(x => x.Id == id);
-            context.RequestItems.Remove(requestItem); 
-            await context.SaveChangesAsync(); 
+            context.RequestItems.Remove(requestItem);
+            await context.SaveChangesAsync();
         }
     }
 }

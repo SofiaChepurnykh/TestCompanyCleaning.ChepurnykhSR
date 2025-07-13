@@ -31,7 +31,32 @@
                     <div class="card-body">
                         <p>@request.PhoneNumber</p>
                         <p>@request.OfficeAddress</p>
-                        <p>@request.Room</p>
+                        <p>@request.Room</p>@* 
+                        <strong>Список услуг:</strong> *@
+                        @if (request.WindowWashing)
+                        {
+                            <p> Мойка окон</p>
+                        }
+                        @if (request.WetСleaning)
+                        {
+                            <p> Влажная уборка</p>
+                        }
+                        @if (request.CarpetСleaning)
+                        {
+                            <p> Чистка ковров</p>
+                        }
+                        @if (request.Disinfection)
+                        {
+                            <p> Дезинфекция</p>
+                        }
+                        @if (request.GarbageRemoval)
+                        {
+                            <p> Вынос мусора</p>
+                        }
+                        @if (request.OfficeEquipmentCleaning)
+                        {
+                            <p> Очистка офисной техники</p>
+                        }
                         <p>@request.RequestedDateTime?.ToString("g")</p>
                         <p>@request.Comment</p>
                         <p>@request.CreatedDate.ToString("g")</p>

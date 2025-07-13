@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TestCompanyCleaning.Data;
 
@@ -11,9 +12,11 @@ using TestCompanyCleaning.Data;
 namespace TestCompanyCleaning.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250713061921_add_requestitem10")]
+    partial class add_requestitem10
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -220,6 +223,45 @@ namespace TestCompanyCleaning.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("TestCompanyCleaning.Data.CleaningService", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CleaningServices");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Влажная уборка"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Вынос мусора"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Мойка окон"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Очистка офисной техники"
+                        });
+                });
+
             modelBuilder.Entity("TestCompanyCleaning.Data.RequestItem", b =>
                 {
                     b.Property<int>("Id")
@@ -228,31 +270,19 @@ namespace TestCompanyCleaning.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("CarpetСleaning")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("Disinfection")
-                        .HasColumnType("bit");
-
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("GarbageRemoval")
-                        .HasColumnType("bit");
-
                     b.Property<string>("OfficeAddress")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("OfficeEquipmentCleaning")
-                        .HasColumnType("bit");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
@@ -266,12 +296,6 @@ namespace TestCompanyCleaning.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("WetСleaning")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("WindowWashing")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
 
                     b.ToTable("RequestItems");
@@ -280,37 +304,40 @@ namespace TestCompanyCleaning.Migrations
                         new
                         {
                             Id = 1,
-                            CarpetСleaning = false,
                             Comment = "Пожалуйста, уделите внимание углам",
-                            CreatedDate = new DateTime(2025, 7, 13, 15, 27, 3, 535, DateTimeKind.Local).AddTicks(8033),
-                            Disinfection = false,
+                            CreatedDate = new DateTime(2025, 7, 13, 11, 19, 21, 82, DateTimeKind.Local).AddTicks(5695),
                             FullName = "Иванов Иван Иванович",
-                            GarbageRemoval = false,
                             OfficeAddress = "Г. Тестовик, ул. Первая, д. 1",
-                            OfficeEquipmentCleaning = false,
                             PhoneNumber = "89111111111",
                             RequestedDateTime = new DateTime(2025, 7, 3, 14, 0, 0, 0, DateTimeKind.Unspecified),
-                            Room = "1",
-                            WetСleaning = false,
-                            WindowWashing = true
+                            Room = "1"
                         },
                         new
                         {
                             Id = 2,
-                            CarpetСleaning = false,
                             Comment = "4 компьютера",
-                            CreatedDate = new DateTime(2025, 7, 13, 15, 27, 3, 535, DateTimeKind.Local).AddTicks(8035),
-                            Disinfection = false,
+                            CreatedDate = new DateTime(2025, 7, 13, 11, 19, 21, 82, DateTimeKind.Local).AddTicks(5698),
                             FullName = "Петров Петр Петрович",
-                            GarbageRemoval = false,
                             OfficeAddress = "Г. Тестовик, ул. Вторая, д. 2",
-                            OfficeEquipmentCleaning = false,
                             PhoneNumber = "89222222222",
                             RequestedDateTime = new DateTime(2025, 7, 4, 15, 0, 0, 0, DateTimeKind.Unspecified),
-                            Room = "2",
-                            WetСleaning = false,
-                            WindowWashing = false
+                            Room = "2"
                         });
+                });
+
+            modelBuilder.Entity("TestCompanyCleaning.Data.SelectedService", b =>
+                {
+                    b.Property<int>("RequestItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CleaningServiceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("RequestItemId", "CleaningServiceId");
+
+                    b.HasIndex("CleaningServiceId");
+
+                    b.ToTable("SelectedServices");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -362,6 +389,35 @@ namespace TestCompanyCleaning.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("TestCompanyCleaning.Data.SelectedService", b =>
+                {
+                    b.HasOne("TestCompanyCleaning.Data.CleaningService", "CleaningService")
+                        .WithMany("SelectedRequests")
+                        .HasForeignKey("CleaningServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TestCompanyCleaning.Data.RequestItem", "RequestItem")
+                        .WithMany("SelectedServices")
+                        .HasForeignKey("RequestItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CleaningService");
+
+                    b.Navigation("RequestItem");
+                });
+
+            modelBuilder.Entity("TestCompanyCleaning.Data.CleaningService", b =>
+                {
+                    b.Navigation("SelectedRequests");
+                });
+
+            modelBuilder.Entity("TestCompanyCleaning.Data.RequestItem", b =>
+                {
+                    b.Navigation("SelectedServices");
                 });
 #pragma warning restore 612, 618
         }

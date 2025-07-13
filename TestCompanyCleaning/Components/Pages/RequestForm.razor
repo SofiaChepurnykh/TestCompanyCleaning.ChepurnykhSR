@@ -17,7 +17,7 @@ else if (RequestItem != null)
     <EditForm Model="RequestItem" FormName="RequestForm" OnValidSubmit="ValidSubmit">
         <DataAnnotationsValidator />
         <ValidationSummary />
-    
+
         <h2>Заявка на клининг</h2>
         <InputNumber @bind-Value="RequestItem.Id" hidden />
 
@@ -58,17 +58,35 @@ else if (RequestItem != null)
             <ValidationMessage For="() => RequestItem.Room" />
         </div>
 
-        @* <div class="form-group d-flex justify-content-between m-2">
-            <label class="col-form-label col-3">Услуга</label>
-            <InputSelect @bind-Value="RequestItem.Services" class="form-control">
-                <option value="">Выберите услугу</option>
-                @foreach (var services in RequestItem.AvailableServices)
-                {
-                    <option value="@services">@services</option>
-                }
-            </InputSelect>
-            <ValidationMessage For="() => RequestItem.Services" />
-        </div> *@
+        <div class="form-group d-flex justify-content-between m-2">
+            <label class="col-form-label col-3">Мойка окон</label>
+            <InputCheckbox @bind-Value="RequestItem.WindowWashing" class="form-check-input" />
+        </div>
+
+        <div class="form-group d-flex justify-content-between m-2">
+            <label class="col-form-label col-3">Влажная уборка</label>
+            <InputCheckbox @bind-Value="RequestItem.WetСleaning" class="form-check-input" />
+        </div> 
+
+        <div class="form-group d-flex justify-content-between m-2">
+            <label class="col-form-label col-3">Чистка ковров</label>
+            <InputCheckbox @bind-Value="RequestItem.CarpetСleaning" class="form-check-input" />
+        </div>
+
+        <div class="form-group d-flex justify-content-between m-2">
+            <label class="col-form-label col-3">Дезинфекция</label>
+            <InputCheckbox @bind-Value="RequestItem.Disinfection" class="form-check-input" />
+        </div>
+
+        <div class="form-group d-flex justify-content-between m-2">
+            <label class="col-form-label col-3">Вынос мусора</label>
+            <InputCheckbox @bind-Value="RequestItem.GarbageRemoval" class="form-check-input" />
+        </div>
+
+        <div class="form-group d-flex justify-content-between m-2">
+            <label class="col-form-label col-3">Очистка офисной техники</label>
+            <InputCheckbox @bind-Value="RequestItem.OfficeEquipmentCleaning" class="form-check-input" />
+        </div>
 
         <div class="form-group d-flex justify-content-between m-2">
             <label class="col-form-label col-3">Дата и время</label>
@@ -110,7 +128,7 @@ else if (RequestItem != null)
 
                 if (src == null)
                 {
-                    NotFound = true; 
+                    NotFound = true;
                     return;
                 }
 
@@ -119,7 +137,6 @@ else if (RequestItem != null)
                 RequestItem.PhoneNumber = src.PhoneNumber;
                 RequestItem.OfficeAddress = src.OfficeAddress;
                 RequestItem.Room = src.Room;
-                // RequestItem.Services = src.Services;
                 RequestItem.RequestedDateTime = src.RequestedDateTime;
                 RequestItem.Comment = src.Comment;
                 RequestItem.CreatedDate = src.CreatedDate;

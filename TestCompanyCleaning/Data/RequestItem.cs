@@ -15,7 +15,13 @@ namespace TestCompanyCleaning.Data
         public string? OfficeAddress { get; set; } // Адрес офиса (1 из 2)
         [Required(ErrorMessage = "Поле 'Кабинет' обязательно")]
         public string? Room { get; set; } // Кабинет (1 из 10)
-        //public string? Services { get; set; } // Выбранные услуги (можно выбрать несколько)
+        public bool WindowWashing { get; set; } // Мойка окон 
+        public bool WetСleaning { get; set; } // Влажная уборка
+        public bool CarpetСleaning { get; set; } // Чистка ковров
+        public bool Disinfection { get; set; } // Дезинфекция
+        public bool GarbageRemoval { get; set; } // Вынос мусора
+        public bool OfficeEquipmentCleaning { get; set; } // Очистка офисной техники
+
         [Required(ErrorMessage = "Поле 'Дата и время' обязательно")]
         [FutureDate(ErrorMessage = "Дата должна быть не раньше текущей")]
         public DateTime? RequestedDateTime { get; set; } // Назначенная дата и время
@@ -24,8 +30,7 @@ namespace TestCompanyCleaning.Data
 
         // Статические списки для выбора (выпадающие списки в форме)
         public static List<string> AvailableOffices => new() { "Г. Тестовик, ул. Первая, д. 1", "Г. Тестовик, ул. Вторая, д. 2" };
-        public static List<string> AvailableRooms => new() { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
-        //public static List<string> AvailableServices => new() { "Мойка окон", "Влажная уборка", "Чистка ковров", "Дезинфекция", "Вынос мусора", "Очистка офисной техники" };
+        public static List<string> AvailableRooms => new() { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };     
 
     }
 }
