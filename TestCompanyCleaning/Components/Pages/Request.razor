@@ -7,7 +7,15 @@
 
 <PageTitle>Создание заявки</PageTitle>
 
+<PageTitle>Создание заявки</PageTitle>
+
 <h1>Создание заявки на клининг</h1>
+
+<div class="btn-group m-2">
+    <button class="btn btn-primary" @onclick="AddRequest">Новая заявка</button>
+</div>
+
+<h1>Изменение заявки</h1>
 
 <div class="container">
     @if (requests == null)
@@ -18,56 +26,47 @@
     }
     else
     {
-        <div class="btn-group m-2">
-            <button class="btn btn-primary" @onclick="AddRequest">Новая заявка</button>
-        </div>
-        <div class="card-group">
-            @foreach (var request in requests)
-            {
-                <div class="card">
-                    <div class="card-header">
-                        @request.FullName
-                    </div>
-                    <div class="card-body">
-                        <p>@request.PhoneNumber</p>
-                        <p>@request.OfficeAddress</p>
-                        <p>@request.Room</p>@* 
-                        <strong>Список услуг:</strong> *@
-                        @if (request.WindowWashing)
-                        {
-                            <p> Мойка окон</p>
-                        }
-                        @if (request.WetСleaning)
-                        {
-                            <p> Влажная уборка</p>
-                        }
-                        @if (request.CarpetСleaning)
-                        {
-                            <p> Чистка ковров</p>
-                        }
-                        @if (request.Disinfection)
-                        {
-                            <p> Дезинфекция</p>
-                        }
-                        @if (request.GarbageRemoval)
-                        {
-                            <p> Вынос мусора</p>
-                        }
-                        @if (request.OfficeEquipmentCleaning)
-                        {
-                            <p> Очистка офисной техники</p>
-                        }
-                        <p>@request.RequestedDateTime?.ToString("g")</p>
-                        <p>@request.Comment</p>
-                        <p>@request.CreatedDate.ToString("g")</p>
-                    </div>
-                    <div class="card-footer">
-                        <a class="btn btn-primary" href="request/@request.Id">Изменить</a>
-                        <button class="btn btn-primary" @onclick="async () => await ConfirmDelete(request.Id)">Удалить</button>
-                    </div>
-                </div>
-            }
-        </div>
+        @foreach (var request in requests)
+        {
+            <div class="p-3 mb-3 border rounded">
+                <p><strong>ФИО:</strong> @request.FullName</p>
+                <p><strong>Телефон:</strong> @request.PhoneNumber</p>
+                <p><strong>Офис:</strong> @request.OfficeAddress</p>
+                <p><strong>Кабинет:</strong> @request.Room</p>
+                <strong>Список услуг:</strong>
+                @if (request.WindowWashing)
+                {
+                    <p>• Мойка окон</p>
+                }
+                @if (request.WetСleaning)
+                {
+                    <p>• Влажная уборка</p>
+                }
+                @if (request.CarpetСleaning)
+                {
+                    <p>• Чистка ковров</p>
+                }
+                @if (request.Disinfection)
+                {
+                    <p>• Дезинфекция</p>
+                }
+                @if (request.GarbageRemoval)
+                {
+                    <p>• Вынос мусора</p>
+                }
+                @if (request.OfficeEquipmentCleaning)
+                {
+                    <p>• Очистка офисной техники</p>
+                }
+                <p><strong>Дата и время:</strong> @request.RequestedDateTime?.ToString("g")</p>
+                <p><strong>Комментарий:</strong> @request.Comment</p>
+                <p><strong>Создано:</strong> @request.CreatedDate.ToString("g")</p>
+
+                <a class="btn btn-primary" href="request/@request.Id">Изменить</a>
+                <button class="btn btn-primary" @onclick="async () => await ConfirmDelete(request.Id)">Удалить</button>
+            </div>
+        }
+
     }
 </div>
 

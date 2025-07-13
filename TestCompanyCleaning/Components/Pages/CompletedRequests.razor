@@ -1,0 +1,61 @@
+﻿@page "/weather"
+@attribute [StreamRendering]
+@inject IDataService data
+@attribute [Authorize]
+
+<h1>Архив заявок на клининг</h1>
+
+@if (requests == null)
+{
+    <p>Загрузка...</p>
+}
+else
+{
+    @foreach (var request in requests)
+    {
+        <div class="p-3 mb-3 border rounded">
+            <p><strong>ФИО:</strong> @request.FullName</p>
+            <p><strong>Телефон:</strong> @request.PhoneNumber</p>
+            <p><strong>Офис:</strong> @request.OfficeAddress</p>
+            <p><strong>Кабинет:</strong> @request.Room</p>
+            <strong>Список услуг:</strong>
+            @if (request.WindowWashing)
+            {
+                <p>• Мойка окон</p>
+            }
+            @if (request.WetСleaning)
+            {
+                <p>• Влажная уборка</p>
+            }
+            @if (request.CarpetСleaning)
+            {
+                <p>• Чистка ковров</p>
+            }
+            @if (request.Disinfection)
+            {
+                <p>• Дезинфекция</p>
+            }
+            @if (request.GarbageRemoval)
+            {
+                <p>• Вынос мусора</p>
+            }
+            @if (request.OfficeEquipmentCleaning)
+            {
+                <p>• Очистка офисной техники</p>
+            }
+            <p><strong>Дата и время:</strong> @request.RequestedDateTime?.ToString("g")</p>
+            <p><strong>Комментарий:</strong> @request.Comment</p>
+            <p><strong>Создано:</strong> @request.CreatedDate.ToString("g")</p>
+        </div>
+    }
+}
+
+@code {
+    IEnumerable<RequestItem>? requests;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var all = await data.GetAllAsync();
+        requests = all.Where(x => x.IsCompleted);
+    }
+}

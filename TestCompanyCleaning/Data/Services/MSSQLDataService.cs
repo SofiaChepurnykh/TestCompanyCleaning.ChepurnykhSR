@@ -14,6 +14,8 @@ namespace TestCompanyCleaning.Data.Services
         {
             if (requestItem.Id == 0)
             {
+                requestItem.InProgress = true;
+                requestItem.IsCompleted = false;
                 await context.RequestItems.AddAsync(requestItem);
             }
             else

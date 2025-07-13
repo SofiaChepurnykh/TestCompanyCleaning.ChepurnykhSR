@@ -51,6 +51,7 @@ else
             <p><strong>Дата и время:</strong> @request.RequestedDateTime?.ToString("g")</p>
             <p><strong>Комментарий:</strong> @request.Comment</p>
             <p><strong>Создано:</strong> @request.CreatedDate.ToString("g")</p>
+            <button class="btn btn-success" @onclick="() => MarkCompleted(request.Id)">Завершить</button>
         </div>
     }
 }
@@ -61,7 +62,8 @@ else
     protected override async Task OnParametersSetAsync()
     {
         await base.OnInitializedAsync();
-        requests = await data.GetAllAsync();
+        requests = (await data.GetAllAsync())
+            .Where(x => x.InProgress && !x.IsCompleted);
     }
 
     void AddRequest()
@@ -73,5 +75,18 @@ else
     {
         await data.DeleteAsync(id);
         requests = await data.GetAllAsync();
+    }
+
+    async Task MarkCompleted(int id)
+    {
+        var item = await data.GetRequestAsync(id);
+        if (item != null)
+        {
+            item.InProgress = false;
+            item.IsCompleted = true;
+            await data.SaveAsync(item);
+            requests = (await data.GetAllAsync())
+                .Where(x => x.InProgress && !x.IsCompleted);
+        }
     }
 }

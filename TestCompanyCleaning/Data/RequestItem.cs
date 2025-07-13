@@ -28,6 +28,9 @@ namespace TestCompanyCleaning.Data
         public string? Comment { get; set; } // Комментарий
         public DateTime CreatedDate { get; set; } = DateTime.Now; // Дата создания
 
+        public bool InProgress { get; set; } = true; // В работе
+        public bool IsCompleted { get; set; } = false; // Не завершена по умолчанию
+
         // Статические списки для выбора (выпадающие списки в форме)
         public static List<string> AvailableOffices => new() { "Г. Тестовик, ул. Первая, д. 1", "Г. Тестовик, ул. Вторая, д. 2" };
         public static List<string> AvailableRooms => new() { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };     
