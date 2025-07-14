@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TestCompanyCleaning.Data;
 
@@ -11,9 +12,11 @@ using TestCompanyCleaning.Data;
 namespace TestCompanyCleaning.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250714122544_AddReview1")]
+    partial class AddReview1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -264,16 +267,9 @@ namespace TestCompanyCleaning.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Rating")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime?>("RequestedDateTime")
                         .IsRequired()
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("ReviewComment")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Room")
                         .IsRequired()
@@ -295,7 +291,7 @@ namespace TestCompanyCleaning.Migrations
                             Id = 1,
                             CarpetСleaning = false,
                             Comment = "Пожалуйста, уделите внимание углам",
-                            CreatedDate = new DateTime(2025, 7, 14, 22, 22, 14, 74, DateTimeKind.Local).AddTicks(7041),
+                            CreatedDate = new DateTime(2025, 7, 14, 17, 25, 43, 978, DateTimeKind.Local).AddTicks(5213),
                             Disinfection = false,
                             FullName = "Иванов Иван Иванович",
                             GarbageRemoval = false,
@@ -314,7 +310,7 @@ namespace TestCompanyCleaning.Migrations
                             Id = 2,
                             CarpetСleaning = false,
                             Comment = "4 компьютера",
-                            CreatedDate = new DateTime(2025, 7, 14, 22, 22, 14, 74, DateTimeKind.Local).AddTicks(7045),
+                            CreatedDate = new DateTime(2025, 7, 14, 17, 25, 43, 978, DateTimeKind.Local).AddTicks(5216),
                             Disinfection = false,
                             FullName = "Петров Петр Петрович",
                             GarbageRemoval = false,
@@ -328,6 +324,32 @@ namespace TestCompanyCleaning.Migrations
                             WetСleaning = false,
                             WindowWashing = false
                         });
+                });
+
+            modelBuilder.Entity("TestCompanyCleaning.Data.Review", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Comment")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RequestItemId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RequestItemId")
+                        .IsUnique();
+
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -379,6 +401,22 @@ namespace TestCompanyCleaning.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("TestCompanyCleaning.Data.Review", b =>
+                {
+                    b.HasOne("TestCompanyCleaning.Data.RequestItem", "RequestItem")
+                        .WithOne("Review")
+                        .HasForeignKey("TestCompanyCleaning.Data.Review", "RequestItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("RequestItem");
+                });
+
+            modelBuilder.Entity("TestCompanyCleaning.Data.RequestItem", b =>
+                {
+                    b.Navigation("Review");
                 });
 #pragma warning restore 612, 618
         }

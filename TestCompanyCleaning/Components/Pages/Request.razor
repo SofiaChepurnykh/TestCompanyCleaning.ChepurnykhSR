@@ -7,8 +7,6 @@
 
 <PageTitle>Создание заявки</PageTitle>
 
-<PageTitle>Создание заявки</PageTitle>
-
 <h1>Создание заявки на клининг</h1>
 
 <div class="btn-group m-2">
@@ -61,18 +59,20 @@
                 <p><strong>Дата и время:</strong> @request.RequestedDateTime?.ToString("g")</p>
                 <p><strong>Комментарий:</strong> @request.Comment</p>
                 <p><strong>Создано:</strong> @request.CreatedDate.ToString("g")</p>
-                <strong>Статус заявки:</strong> 
+                <strong>Статус заявки:</strong>
                 @if (request.InProgress)
                 {
                     <p>В работе</p>
+                    <a class="btn btn-primary" href="request/@request.Id">Изменить</a>
+                    <button class="btn btn-primary" @onclick="async () => await ConfirmDelete(request.Id)">Удалить</button>
                 }
                 @if (request.IsCompleted)
                 {
                     <p>Завершено</p>
-                }
-
-                <a class="btn btn-primary" href="request/@request.Id">Изменить</a>
-                <button class="btn btn-primary" @onclick="async () => await ConfirmDelete(request.Id)">Удалить</button>
+                    <p><strong>Оценка:</strong> @request.Rating</p>
+                    <p><strong>Комментарий к оценке:</strong> @request.ReviewComment</p>
+                    <a class="btn btn-success" href="review/@request.Id">Оставить оценку</a>
+                }                
             </div>
         }
 
@@ -85,9 +85,9 @@
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        requests = (await data.GetAllAsync())
-            .Where(r => r.InProgress && !r.IsCompleted)
-            .ToList();
+        requests = (await data.GetAllAsync());
+        // .Where(r => r.InProgress && !r.IsCompleted)
+            // .ToList();
     }
 
     void AddRequest()

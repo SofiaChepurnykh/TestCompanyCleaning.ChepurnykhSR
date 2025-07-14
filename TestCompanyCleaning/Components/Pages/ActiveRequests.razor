@@ -24,30 +24,30 @@ else
             <p><strong>Офис:</strong> @request.OfficeAddress</p>
             <p><strong>Кабинет:</strong> @request.Room</p>
             <strong>Список услуг:</strong>
-                        @if (request.WindowWashing)
-                        {
-                            <p>• Мойка окон</p>
-                        }
-                        @if (request.WetСleaning)
-                        {
-                            <p>• Влажная уборка</p>
-                        }
-                        @if (request.CarpetСleaning)
-                        {
-                            <p>• Чистка ковров</p>
-                        }
-                        @if (request.Disinfection)
-                        {
-                            <p>• Дезинфекция</p>
-                        }
-                        @if (request.GarbageRemoval)
-                        {
-                            <p>• Вынос мусора</p>
-                        }
-                        @if (request.OfficeEquipmentCleaning)
-                        {
-                            <p>• Очистка офисной техники</p>
-                        }
+            @if (request.WindowWashing)
+            {
+                <p>• Мойка окон</p>
+            }
+            @if (request.WetСleaning)
+            {
+                <p>• Влажная уборка</p>
+            }
+            @if (request.CarpetСleaning)
+            {
+                <p>• Чистка ковров</p>
+            }
+            @if (request.Disinfection)
+            {
+                <p>• Дезинфекция</p>
+            }
+            @if (request.GarbageRemoval)
+            {
+                <p>• Вынос мусора</p>
+            }
+            @if (request.OfficeEquipmentCleaning)
+            {
+                <p>• Очистка офисной техники</p>
+            }
             <p><strong>Дата и время:</strong> @request.RequestedDateTime?.ToString("g")</p>
             <p><strong>Комментарий:</strong> @request.Comment</p>
             <p><strong>Создано:</strong> @request.CreatedDate.ToString("g")</p>

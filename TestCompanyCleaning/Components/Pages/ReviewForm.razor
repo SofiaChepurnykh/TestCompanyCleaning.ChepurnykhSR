@@ -1,5 +1,5 @@
-﻿@page "/request/add"
-@page "/request/{Id:int}"
+﻿@page "/review/add"
+@page "/review/{Id:int}"
 
 @inject IDataService data
 @inject NavigationManager navigate
@@ -23,81 +23,89 @@ else if (RequestItem != null)
 
         <div class="form-group d-flex justify-content-between m-2">
             <label class="col-form-label col-3">ФИО</label>
-            <InputText @bind-Value="RequestItem.FullName" class="form-control" />
+            <InputText @bind-Value="RequestItem.FullName" class="form-control" readonly />
             <ValidationMessage For="() => RequestItem.FullName" />
         </div>
 
         <div class="form-group d-flex justify-content-between m-2">
             <label class="col-form-label col-3">Телефон</label>
-            <InputText @bind-Value="RequestItem.PhoneNumber" class="form-control"
+            <InputText @bind-Value="RequestItem.PhoneNumber" class="form-control" readonly
                        maxlength="11" inputmode="numeric" pattern="[0-9]*" />
             <ValidationMessage For="() => RequestItem.PhoneNumber" />
         </div>
 
         <div class="form-group d-flex justify-content-between m-2">
             <label class="col-form-label col-3">Офис</label>
-            <InputSelect @bind-Value="RequestItem.OfficeAddress" class="form-control">
-                <option value="">Выберите офис</option>
-                @foreach (var office in RequestItem.AvailableOffices)
-                {
-                    <option value="@office">@office</option>
-                }
-            </InputSelect>
+            <input class="form-control" value="@RequestItem.OfficeAddress" readonly />
+            <InputText @bind-Value="RequestItem.OfficeAddress" hidden />
             <ValidationMessage For="() => RequestItem.OfficeAddress" />
         </div>
 
         <div class="form-group d-flex justify-content-between m-2">
             <label class="col-form-label col-3">Кабинет</label>
-            <InputSelect @bind-Value="RequestItem.Room" class="form-control">
-                <option value="">Выберите кабинет</option>
-                @foreach (var room in RequestItem.AvailableRooms)
-                {
-                    <option value="@room">@room</option>
-                }
-            </InputSelect>
+            <input class="form-control" value="@RequestItem.Room" readonly />
+            <InputText @bind-Value="RequestItem.Room" hidden />
             <ValidationMessage For="() => RequestItem.Room" />
         </div>
 
         <div class="form-group d-flex justify-content-between m-2">
             <label class="col-form-label col-3">Мойка окон</label>
-            <InputCheckbox @bind-Value="RequestItem.WindowWashing" class="form-check-input" />
+            <span class="form-control bg-light">@((RequestItem.WindowWashing ? "Да" : "Нет"))</span>
         </div>
 
         <div class="form-group d-flex justify-content-between m-2">
             <label class="col-form-label col-3">Влажная уборка</label>
-            <InputCheckbox @bind-Value="RequestItem.WetСleaning" class="form-check-input" />
+            <span class="form-control bg-light">@((RequestItem.WindowWashing ? "Да" : "Нет"))</span>
         </div>
 
         <div class="form-group d-flex justify-content-between m-2">
             <label class="col-form-label col-3">Чистка ковров</label>
-            <InputCheckbox @bind-Value="RequestItem.CarpetСleaning" class="form-check-input" />
+            <span class="form-control bg-light">@((RequestItem.WindowWashing ? "Да" : "Нет"))</span>
         </div>
 
         <div class="form-group d-flex justify-content-between m-2">
             <label class="col-form-label col-3">Дезинфекция</label>
-            <InputCheckbox @bind-Value="RequestItem.Disinfection" class="form-check-input" />
+            <span class="form-control bg-light">@((RequestItem.WindowWashing ? "Да" : "Нет"))</span>
         </div>
 
         <div class="form-group d-flex justify-content-between m-2">
             <label class="col-form-label col-3">Вынос мусора</label>
-            <InputCheckbox @bind-Value="RequestItem.GarbageRemoval" class="form-check-input" />
+            <span class="form-control bg-light">@((RequestItem.WindowWashing ? "Да" : "Нет"))</span>
         </div>
 
         <div class="form-group d-flex justify-content-between m-2">
             <label class="col-form-label col-3">Очистка офисной техники</label>
-            <InputCheckbox @bind-Value="RequestItem.OfficeEquipmentCleaning" class="form-check-input" />
+            <span class="form-control bg-light">@((RequestItem.WindowWashing ? "Да" : "Нет"))</span>
         </div>
 
         <div class="form-group d-flex justify-content-between m-2">
             <label class="col-form-label col-3">Дата и время</label>
-            <InputDate @bind-Value="RequestItem.RequestedDateTime" class="form-control" min="@MinDateString" />
+            <InputDate @bind-Value="RequestItem.RequestedDateTime" class="form-control" min="@MinDateString" readonly />
             <ValidationMessage For="() => RequestItem.RequestedDateTime" />
         </div>
 
         <div class="form-group d-flex justify-content-between m-2">
             <label class="col-form-label col-3">Комментарий</label>
-            <InputTextArea @bind-Value="RequestItem.Comment" class="form-control" maxlength="200" />
+            <InputTextArea @bind-Value="RequestItem.Comment" class="form-control" maxlength="200" readonly />
             <ValidationMessage For="() => RequestItem.Comment" />
+        </div>
+
+        <div class="form-group d-flex justify-content-between m-2">
+            <label class="col-form-label col-3">Оценка</label>
+            <InputSelect @bind-Value="RequestItem.Rating" class="form-control">
+                <option value="">Выберите оценку</option>
+                @foreach (var rating in RequestItem.AvailableRating)
+                {
+                    <option value="@rating">@rating</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="() => RequestItem.Rating" />
+        </div>
+
+        <div class="form-group d-flex justify-content-between m-2">
+            <label class="col-form-label col-3">Комментарий к оценке</label>
+            <InputTextArea @bind-Value="RequestItem.ReviewComment" class="form-control" maxlength="200" />
+            <ValidationMessage For="() => RequestItem.ReviewComment" />
         </div>
 
         <div class="btn-group">
@@ -143,10 +151,31 @@ else if (RequestItem != null)
 
     async Task ValidSubmit()
     {
-        if (RequestItem!.Id == 0)
+        if (RequestItem!.Id != 0)
         {
-            RequestItem.CreatedDate = DateTime.Now;
+            // Получаем оригинальную заявку из базы
+            var originalRequest = await data.GetRequestAsync(RequestItem.Id);
+            if (originalRequest != null)
+            {
+                // Восстанавливаем флаги услуг
+                RequestItem.WindowWashing = originalRequest.WindowWashing;
+                RequestItem.WetСleaning = originalRequest.WetСleaning;
+                RequestItem.CarpetСleaning = originalRequest.CarpetСleaning;
+                RequestItem.Disinfection = originalRequest.Disinfection;
+                RequestItem.GarbageRemoval = originalRequest.GarbageRemoval;
+                RequestItem.OfficeEquipmentCleaning = originalRequest.OfficeEquipmentCleaning;
+
+                // Также можно восстановить другие важные поля:
+                RequestItem.OfficeAddress = originalRequest.OfficeAddress;
+                RequestItem.Room = originalRequest.Room;
+                RequestItem.FullName = originalRequest.FullName;
+                RequestItem.PhoneNumber = originalRequest.PhoneNumber;
+                RequestItem.RequestedDateTime = originalRequest.RequestedDateTime;
+                RequestItem.Comment = originalRequest.Comment;
+                RequestItem.CreatedDate = originalRequest.CreatedDate;
+            }
         }
+
         await data.SaveAsync(RequestItem!);
         navigate.NavigateTo("/");
     }

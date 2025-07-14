@@ -1,13 +1,13 @@
-{
-  "exclude": [
-    "**/bin",
-    "**/bower_components",
-    "**/jspm_packages",
-    "**/node_modules",
-    "**/obj",
-    "**/platforms"
-  ]
-}
+//{
+//  "exclude": [
+//    "**/bin",
+//    "**/bower_components",
+//    "**/jspm_packages",
+//    "**/node_modules",
+//    "**/obj",
+//    "**/platforms"
+//  ]
+//}
 
 document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll("input[type='email'], input[placeholder*='@']").forEach(input => {

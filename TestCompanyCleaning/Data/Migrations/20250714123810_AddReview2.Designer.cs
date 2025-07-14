@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TestCompanyCleaning.Data;
 
@@ -11,9 +12,11 @@ using TestCompanyCleaning.Data;
 namespace TestCompanyCleaning.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250714123810_AddReview2")]
+    partial class AddReview2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -264,8 +267,8 @@ namespace TestCompanyCleaning.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Rating")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("Rating")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("RequestedDateTime")
                         .IsRequired()
@@ -295,7 +298,7 @@ namespace TestCompanyCleaning.Migrations
                             Id = 1,
                             CarpetСleaning = false,
                             Comment = "Пожалуйста, уделите внимание углам",
-                            CreatedDate = new DateTime(2025, 7, 14, 22, 22, 14, 74, DateTimeKind.Local).AddTicks(7041),
+                            CreatedDate = new DateTime(2025, 7, 14, 17, 38, 10, 131, DateTimeKind.Local).AddTicks(6130),
                             Disinfection = false,
                             FullName = "Иванов Иван Иванович",
                             GarbageRemoval = false,
@@ -314,7 +317,7 @@ namespace TestCompanyCleaning.Migrations
                             Id = 2,
                             CarpetСleaning = false,
                             Comment = "4 компьютера",
-                            CreatedDate = new DateTime(2025, 7, 14, 22, 22, 14, 74, DateTimeKind.Local).AddTicks(7045),
+                            CreatedDate = new DateTime(2025, 7, 14, 17, 38, 10, 131, DateTimeKind.Local).AddTicks(6133),
                             Disinfection = false,
                             FullName = "Петров Петр Петрович",
                             GarbageRemoval = false,

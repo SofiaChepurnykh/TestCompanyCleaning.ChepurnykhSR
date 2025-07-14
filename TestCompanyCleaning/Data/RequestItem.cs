@@ -30,10 +30,15 @@ namespace TestCompanyCleaning.Data
 
         public bool InProgress { get; set; } = true; // В работе
         public bool IsCompleted { get; set; } = false; // Не завершена по умолчанию
+        public string? Rating { get; set; } // Оценка (1 из 10)
+
+        [MaxLength(200)]
+        public string? ReviewComment { get; set; } // Комментарий к оценке
 
         // Статические списки для выбора (выпадающие списки в форме)
         public static List<string> AvailableOffices => new() { "Г. Тестовик, ул. Первая, д. 1", "Г. Тестовик, ул. Вторая, д. 2" };
-        public static List<string> AvailableRooms => new() { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };     
+        public static List<string> AvailableRooms => new() { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
+        public static List<string> AvailableRating => new() { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
 
     }
 }

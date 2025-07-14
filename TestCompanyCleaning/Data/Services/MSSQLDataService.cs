@@ -35,6 +35,8 @@ namespace TestCompanyCleaning.Data.Services
                     existing.OfficeEquipmentCleaning = requestItem.OfficeEquipmentCleaning;
                     existing.RequestedDateTime = requestItem.RequestedDateTime;
                     existing.Comment = requestItem.Comment;
+                    existing.Rating = requestItem.Rating;
+                    existing.ReviewComment = requestItem.ReviewComment;
                 }
             }
 
