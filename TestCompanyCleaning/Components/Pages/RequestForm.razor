@@ -66,7 +66,7 @@ else if (RequestItem != null)
         <div class="form-group d-flex justify-content-between m-2">
             <label class="col-form-label col-3">Влажная уборка</label>
             <InputCheckbox @bind-Value="RequestItem.WetСleaning" class="form-check-input" />
-        </div> 
+        </div>
 
         <div class="form-group d-flex justify-content-between m-2">
             <label class="col-form-label col-3">Чистка ковров</label>
@@ -132,20 +132,21 @@ else if (RequestItem != null)
                     return;
                 }
 
-                RequestItem.Id = src.Id;
-                RequestItem.FullName = src.FullName;
-                RequestItem.PhoneNumber = src.PhoneNumber;
-                RequestItem.OfficeAddress = src.OfficeAddress;
-                RequestItem.Room = src.Room;
-                RequestItem.RequestedDateTime = src.RequestedDateTime;
-                RequestItem.Comment = src.Comment;
-                RequestItem.CreatedDate = src.CreatedDate;
+                RequestItem = src; 
+            }
+            else
+            {
+                RequestItem = new(); 
             }
         }
     }
 
     async Task ValidSubmit()
     {
+        if (RequestItem!.Id == 0)
+        {
+            RequestItem.CreatedDate = DateTime.Now;
+        }
         await data.SaveAsync(RequestItem!);
         navigate.NavigateTo("/");
     }

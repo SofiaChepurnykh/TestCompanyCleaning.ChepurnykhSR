@@ -18,13 +18,17 @@
     <div class="col-md-6">
         <EditForm Model="Input" FormName="profile" OnValidSubmit="OnValidSubmitAsync" method="post">
             <DataAnnotationsValidator />
-            <ValidationSummary class="text-danger" role="alert" />
+            @* <ValidationSummary class="text-danger" role="alert" /> *@
             <div class="form-floating mb-3">
                 <input type="text" value="@username" class="form-control" placeholder="Введите имя пользователя." disabled />
                 <label for="username" class="form-label">Имя пользователя</label>
             </div>
             <div class="form-floating mb-3">
-                <InputText @bind-Value="Input.PhoneNumber" class="form-control" placeholder="Введите номер телефона." />
+                <InputText @bind-Value="Input.PhoneNumber"
+                           class="form-control"
+                           placeholder="Введите номер телефона."
+                           maxlength="11"
+                           minlength="11" />
                 <label for="phone-number" class="form-label">Номер телефона</label>
                 <ValidationMessage For="() => Input.PhoneNumber" class="text-danger" />
             </div>
@@ -68,9 +72,18 @@
         RedirectManager.RedirectToCurrentPageWithStatus("Ваш профиль был обновлен", HttpContext);
     }
 
+    // private sealed class InputModel
+    // {
+    //     [Phone(ErrorMessage = "Введите корректный номер телефона")]
+    //     [Display(Name = "Номер телефона")]
+    //     public string? PhoneNumber { get; set; }
+    // }
+
     private sealed class InputModel
     {
+        [Required(ErrorMessage = "Номер телефона обязателен")]
         [Phone(ErrorMessage = "Введите корректный номер телефона")]
+        [StringLength(11, ErrorMessage = "Номер телефона должен содержать ровно 11 цифр", MinimumLength = 11)]
         [Display(Name = "Номер телефона")]
         public string? PhoneNumber { get; set; }
     }

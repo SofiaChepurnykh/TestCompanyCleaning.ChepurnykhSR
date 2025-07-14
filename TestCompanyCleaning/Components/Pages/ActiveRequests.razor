@@ -51,6 +51,16 @@ else
             <p><strong>Дата и время:</strong> @request.RequestedDateTime?.ToString("g")</p>
             <p><strong>Комментарий:</strong> @request.Comment</p>
             <p><strong>Создано:</strong> @request.CreatedDate.ToString("g")</p>
+            <strong>Статус заявки:</strong>
+            @if (request.InProgress)
+            {
+                <p>В работе</p>
+            }
+            @if (request.IsCompleted)
+            {
+                <p>Завершено</p>
+            }
+
             <button class="btn btn-success" @onclick="() => MarkCompleted(request.Id)">Завершить</button>
         </div>
     }

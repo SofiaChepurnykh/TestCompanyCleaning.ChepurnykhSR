@@ -20,8 +20,24 @@ namespace TestCompanyCleaning.Data.Services
             }
             else
             {
-                context.RequestItems.Update(requestItem);
+                var existing = await context.RequestItems.FirstOrDefaultAsync(x => x.Id == requestItem.Id);
+                if (existing != null)
+                {
+                    existing.FullName = requestItem.FullName;
+                    existing.PhoneNumber = requestItem.PhoneNumber;
+                    existing.OfficeAddress = requestItem.OfficeAddress;
+                    existing.Room = requestItem.Room;
+                    existing.WindowWashing = requestItem.WindowWashing;
+                    existing.WetСleaning = requestItem.WetСleaning;
+                    existing.CarpetСleaning = requestItem.CarpetСleaning;
+                    existing.Disinfection = requestItem.Disinfection;
+                    existing.GarbageRemoval = requestItem.GarbageRemoval;
+                    existing.OfficeEquipmentCleaning = requestItem.OfficeEquipmentCleaning;
+                    existing.RequestedDateTime = requestItem.RequestedDateTime;
+                    existing.Comment = requestItem.Comment;
+                }
             }
+
             await context.SaveChangesAsync();
         }
         public async Task<RequestItem?> GetRequestAsync(int id)
